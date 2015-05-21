@@ -1,14 +1,16 @@
-package com.rockoutwill.letsmodreboot.configuration;
+package com.rockoutwill.letsmodreboot.handler;
 
 import net.minecraftforge.common.config.Configuration;
 import java.io.File;
 
 public class ConfigurationHandler {
 
+    public static Configuration configuration;
+
     public static void init(File configFile){
         boolean configValue = false;
         // create the Config object from the given file
-        Configuration configuration = new Configuration(configFile);
+        configuration = new Configuration(configFile);
 
         try{
             //load the Config file
@@ -22,7 +24,8 @@ public class ConfigurationHandler {
         }
         finally {
             // save the Config File
-            configuration.save();
+            if (configuration.hasChanged())
+                configuration.save();
         }
         System.out.println("Configuration Test: " + configValue);
     }
